@@ -1,3 +1,5 @@
+using Asp.Versioning;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -8,9 +10,21 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 
+#region API Versioning
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0); // Set a default version
+    options.AssumeDefaultVersionWhenUnspecified = true; // Use default if no version is specified
+    options.ReportApiVersions = true; // Include API versions in response headers
+});
+
+#endregion
+
 #region Swagger
 builder.Services.AddSwaggerGen();
 #endregion
+
 
 var app = builder.Build();
 
