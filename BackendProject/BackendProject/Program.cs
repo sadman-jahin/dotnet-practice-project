@@ -1,4 +1,7 @@
+using Application.ServiceCollectionExtension;
 using Asp.Versioning;
+using Infrastructure.ServiceCollectionExtension;
+using Presentation.Controller.v1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +9,16 @@ builder.AddServiceDefaults();
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+#region DI
+
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddProductServices(builder.Configuration);
+
+#endregion
+
+
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(ProductController).Assembly); ;
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 
