@@ -14,7 +14,7 @@ namespace Infrastructure.ServiceCollectionExtension
 {
     public static class ServiceCollectionExtension
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInventoryModuleInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<InventoryDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("InventoryConnection")));

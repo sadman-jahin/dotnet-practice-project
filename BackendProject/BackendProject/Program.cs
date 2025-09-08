@@ -1,6 +1,9 @@
 using Application.ServiceCollectionExtension;
 using Asp.Versioning;
 using Infrastructure.ServiceCollectionExtension;
+using Orders.Infrastructure.ServiceCollectionExtension;
+using Orders.Application.ServiceCollectionExtension;
+using Orders.Presentation.Controller.v1;
 using Presentation.Controller.v1;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,14 +14,17 @@ builder.AddServiceDefaults();
 
 #region DI
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInventoryModuleInfrastructure(builder.Configuration);
+builder.Services.AddOrderModuleInfrastructure(builder.Configuration);
 builder.Services.AddProductServices(builder.Configuration);
+builder.Services.AddOrderServices(builder.Configuration);
 
 #endregion
 
 
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(ProductController).Assembly); ;
+    .AddApplicationPart(typeof(ProductController).Assembly)
+    .AddApplicationPart(typeof(OrderController).Assembly); ;
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 

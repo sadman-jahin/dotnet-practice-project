@@ -22,8 +22,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BackendProject.ServiceDefaults\BackendProject.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\Presentation\Presentation.csproj" />
+    <ProjectReference Include="..\Infrastructure\Inventory.Infrastructure.csproj" />
+    <ProjectReference Include="..\Orders.Infrastructure\Orders.Infrastructure.csproj" />
+    <ProjectReference Include="..\Orders.Presentation\Orders.Presentation.csproj" />
+    <ProjectReference Include="..\Presentation\Inventory.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
