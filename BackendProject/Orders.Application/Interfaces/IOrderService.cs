@@ -14,6 +14,7 @@ namespace Orders.Application.Interfaces
         Task AddOrderAsync(Order order);
         Task UpdateOrderAsync(Order order);
         Task DeleteOrderAsync(long id);
+        Task CloseOrderAsync(long id);
 
     }
 }

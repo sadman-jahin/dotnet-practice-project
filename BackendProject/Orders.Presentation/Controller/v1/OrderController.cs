@@ -76,6 +76,19 @@ namespace Orders.Presentation.Controller.v1
             _logger.LogInformation("Order with ID {OrderId} deleted.", id);
             return NoContent();
         }
+
+        [HttpPut("{id}/close")]
+        public async Task<IActionResult> CloseOrder(long id)
+        {
+            if (id <= 0)
+            {
+                _logger.LogWarning("Invalid ID");
+                return BadRequest("Invalid ID");
+            }
+
+            await _orderService.CloseOrderAsync(id);
+            return NoContent();
+        }
     }
 
 }

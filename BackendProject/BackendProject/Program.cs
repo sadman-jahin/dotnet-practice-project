@@ -1,8 +1,11 @@
+using ApiClient.Application.Interfaces;
+using ApiClient.Application.Services;
 using Application.ServiceCollectionExtension;
 using Asp.Versioning;
 using Infrastructure.ServiceCollectionExtension;
-using Orders.Infrastructure.ServiceCollectionExtension;
+using Messaging.Application.ServiceCollectionExtension;
 using Orders.Application.ServiceCollectionExtension;
+using Orders.Infrastructure.ServiceCollectionExtension;
 using Orders.Presentation.Controller.v1;
 using Presentation.Controller.v1;
 
@@ -18,7 +21,9 @@ builder.Services.AddInventoryModuleInfrastructure(builder.Configuration);
 builder.Services.AddOrderModuleInfrastructure(builder.Configuration);
 builder.Services.AddProductServices(builder.Configuration);
 builder.Services.AddOrderServices(builder.Configuration);
-
+builder.Services.AddMessageQueueServices(builder.Configuration);
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IApiClient, HttpApiClient>();
 #endregion
 
 
