@@ -55,10 +55,11 @@ namespace Orders.Application.Services
         public async Task CloseOrderAsync(long id)
         {
             var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null)
+            if (order == null || order.Status == OrderStatus.Closed)
             {
                 return;
             }
+     
             bool isValidOrder = true;
             foreach (var item in order.Items)
             {
@@ -84,8 +85,8 @@ namespace Orders.Application.Services
 
             if (isValidOrder)
             {
-                //order.Status = OrderStatus.Closed;
-                //await _orderRepository.UpdateAsync(order);
+                order.Status = OrderStatus.Closed;
+                await _orderRepository.UpdateAsync(order);
             }
             return;
         }

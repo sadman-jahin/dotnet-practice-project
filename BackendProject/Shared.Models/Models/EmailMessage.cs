@@ -8,12 +8,16 @@ namespace Shared.Resources.Models
 {
     public class EmailMessage
     {
-        public string To { get; set; }
+        public List<string> To { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
+        public ContentType Type { get; set; } = ContentType.Plain;
     }
-
-
+    public enum ContentType
+    {
+        Plain = 1,
+        HTML = 2
+    }
 
     public class EmailMessageBuilder
     {
@@ -21,12 +25,27 @@ namespace Shared.Resources.Models
 
         public EmailMessageBuilder()
         {
-            _emailMessage = new EmailMessage();
+            _emailMessage = new EmailMessage
+            {
+                To = new List<string>()
+            };
         }
 
         public EmailMessageBuilder WithTo(string to)
         {
-            _emailMessage.To = to;
+            if (!string.IsNullOrWhiteSpace(to))
+            {
+                _emailMessage.To.Add(to);
+            }
+            return this;
+        }
+
+        public EmailMessageBuilder WithTo(List<string> to)
+        {
+            if (to != null && to.Any())
+            {
+                _emailMessage.To.AddRange(to);
+            }
             return this;
         }
 
@@ -44,7 +63,21 @@ namespace Shared.Resources.Models
 
         public EmailMessage Build()
         {
-            // Optional: Add validation here if needed
+            if (_emailMessage.To == null || !_emailMessage.To.Any())
+            {
+                throw new InvalidOperationException("The 'To' list cannot be empty.");
+            }
+
+            if (string.IsNullOrEmpty(_emailMessage.Subject))
+            {
+                throw new InvalidOperationException("Subject cannot be empty.");
+            }
+
+            if (string.IsNullOrEmpty(_emailMessage.Body))
+            {
+                throw new InvalidOperationException("Body cannot be empty.");
+            }
+
             return _emailMessage;
         }
     }

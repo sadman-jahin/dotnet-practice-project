@@ -15,9 +15,9 @@ namespace Messaging.Application.Services
         protected IChannel _channel;
         private string _queueName = "default_queue";
 
-        public RabbitMQService(string hostName = "localhost", string queueName = "default_queue")
+        public RabbitMQService()
         {
-            _ = InitializeConnection(hostName, queueName);
+            InitializeConnection().GetAwaiter().GetResult();
         }
 
         private async Task InitializeConnection(string hostName = "localhost", string queueName = "default_queue")

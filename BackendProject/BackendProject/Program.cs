@@ -6,6 +6,7 @@ using Infrastructure.ServiceCollectionExtension;
 using Messaging.Application.ServiceCollectionExtension;
 using Orders.Application.ServiceCollectionExtension;
 using Orders.Infrastructure.ServiceCollectionExtension;
+using MailSender.Application.ServiceCollectionExtension;
 using Orders.Presentation.Controller.v1;
 using Presentation.Controller.v1;
 
@@ -22,6 +23,7 @@ builder.Services.AddOrderModuleInfrastructure(builder.Configuration);
 builder.Services.AddProductServices(builder.Configuration);
 builder.Services.AddOrderServices(builder.Configuration);
 builder.Services.AddMessageQueueServices(builder.Configuration);
+builder.Services.AddEmailServices(builder.Configuration);
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IApiClient, HttpApiClient>();
 #endregion
