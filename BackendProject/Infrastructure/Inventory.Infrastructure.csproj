@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Inventory.Application.csproj" />
+    <ProjectReference Include="..\Shared.Models\Shared.Resources.csproj" />
   </ItemGroup>
 
 </Project>

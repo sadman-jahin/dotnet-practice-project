@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orders.Application.Interfaces;
+using Orders.Domain.Enum;
 using Orders.Domain.Models;
 using Orders.Infrastructure.Data;
 using Orders.Infrastructure.Entities;
@@ -68,6 +69,12 @@ namespace Orders.Infrastructure.Repositories
                 _context.Orders.Remove(entity);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Order>> GetPendingOrders()
+        {
+            var orders = await _context.Orders.Where(order => order.Status == OrderStatus.Pending).ToListAsync();
+            return orders.Select(OrderMapper.ToModel).ToList();
         }
     }
 }

@@ -1,8 +1,16 @@
+using ApiClient.Application.Endpoints;
+using ApiClient.Application.Interfaces;
+using ApiClient.Application.Services;
 using Application.ServiceCollectionExtension;
 using Asp.Versioning;
 using Infrastructure.ServiceCollectionExtension;
+using MailSender.Application.ServiceCollectionExtension;
+using Messaging.Application.ServiceCollectionExtension;
+using Microsoft.Extensions.Configuration;
+using OrderClose.Application.Extensions;
+using OrderClose.Application.ServiceCollectionExtension;
+using Orders.Application.Extensions;
 using Orders.Infrastructure.ServiceCollectionExtension;
-using Orders.Application.ServiceCollectionExtension;
 using Orders.Presentation.Controller.v1;
 using Presentation.Controller.v1;
 
@@ -18,9 +26,16 @@ builder.Services.AddInventoryModuleInfrastructure(builder.Configuration);
 builder.Services.AddOrderModuleInfrastructure(builder.Configuration);
 builder.Services.AddProductServices(builder.Configuration);
 builder.Services.AddOrderServices(builder.Configuration);
-
+builder.Services.AddMessageQueueServices(builder.Configuration);
+builder.Services.AddEmailServices(builder.Configuration);
+builder.Services.AddHttpClient();
+builder.Services.AddSingleton<IApiClient, HttpApiClient>();
+builder.Services.AddSchedulerServices(builder.Configuration);
 #endregion
 
+#region Static Class Init
+ApiEndpoint.Initialize(builder.Configuration);
+#endregion
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(ProductController).Assembly)
@@ -55,6 +70,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseHangfire();
 
 app.UseHttpsRedirection();
 

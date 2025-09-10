@@ -2,6 +2,7 @@
 using Asp.Versioning;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Resources.Models;
 
 namespace Presentation.Controller.v1
 {
@@ -71,6 +72,32 @@ namespace Presentation.Controller.v1
 
             await _productService.DeleteProduct(id);
             return NoContent();
+        }
+
+        [HttpPost("exists")]
+        public async Task<IActionResult> IsExists(List<long> ids)
+        {
+            var isExist = await _productService.IsProductExists(ids);
+            return Ok(isExist);
+        }
+
+        [HttpPut("deduct")]
+        public async Task<IActionResult> DeductProductQuantity([FromBody] List<ProductDeductDto> products)
+        {
+            if (products == null || !products.Any())
+            {
+                return BadRequest("Product list cannot be null or empty.");
+            }
+
+            try
+            {
+                await _productService.DeductProductQuantityAsync(products);
+                return Ok("Product quantities deducted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
 
     }

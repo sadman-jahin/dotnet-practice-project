@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orders.Application.ServiceCollectionExtension
+namespace Orders.Application.Extensions
 {
     public static class ServiceCollectionExtension
     {
