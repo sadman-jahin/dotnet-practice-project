@@ -2,6 +2,8 @@
 using Domain.Models;
 using Infrastructure.Data;
 using Infrastructure.Mapper;
+using Microsoft.EntityFrameworkCore;
+using Shared.Resources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +50,33 @@ namespace Infrastructure.Repositories
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<bool> IsProductExists(List<long> ids)
+        {
+            return await _context.Products
+                         .Where(product => ids.Contains(product.Id))
+                         .CountAsync() == ids.Count;
+        }
+
+        public async Task DeductProductQuantityAsync(List<ProductDeductDto> products)
+        {
+            var productIds = products.Select(pr => pr.ProductId).ToList();
+
+            var items = await _context.Products
+                .Where(product => productIds.Contains(product.Id))
+                .ToListAsync();
+
+            foreach (var item in items)
+            {
+                var productToDeduct = products.FirstOrDefault(p => p.ProductId == item.Id);
+                if (productToDeduct != null)
+                {
+                    item.Quantity -= productToDeduct.Quantity;
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -44,10 +44,11 @@ namespace Orders.Presentation.Controller.v1
         [HttpPost]
         public async Task<IActionResult> AddOrder([FromBody] Order order)
         {
-            if (!ModelState.IsValid)
+            bool isValidIds = await _orderService.HasOrderValidProductIds(order);
+            if (!isValidIds)
             {
-                _logger.LogWarning("Invalid order model received.");
-                return BadRequest(ModelState);
+                _logger.LogWarning("Product ids mismatch. One or more product IDs are invalid.");
+                return BadRequest("Product ids mismatch. One or more product IDs are invalid.");
             }
 
             await _orderService.AddOrderAsync(order);
@@ -62,6 +63,13 @@ namespace Orders.Presentation.Controller.v1
             {
                 _logger.LogWarning("Order ID mismatch: route ID = {RouteId}, body ID = {BodyId}", id, order.Id);
                 return BadRequest("Order ID mismatch.");
+            }
+
+            bool isValidIds = await _orderService.HasOrderValidProductIds(order);
+            if (!isValidIds)
+            {
+                _logger.LogWarning("Product ids mismatch.");
+                return BadRequest("Product ids mismatch.");
             }
 
             await _orderService.UpdateOrderAsync(order);
@@ -88,6 +96,20 @@ namespace Orders.Presentation.Controller.v1
 
             await _orderService.CloseOrderAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("pending")]
+        public async Task<IActionResult> GetPendingOrders()
+        {
+            try
+            {
+                var orders = await _orderService.GetPendingOrdersAsync();
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while retrieving pending orders.", details = ex.Message });
+            }
         }
     }
 

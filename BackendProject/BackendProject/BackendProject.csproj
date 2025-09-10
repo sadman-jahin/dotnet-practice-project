@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Infrastructure\Inventory.Infrastructure.csproj" />
     <ProjectReference Include="..\MailSender.Application\MailSender.Application.csproj" />
     <ProjectReference Include="..\Messaging.Application\Messaging.Application.csproj" />
+    <ProjectReference Include="..\OrderClose.Application\OrderClose.Application.csproj" />
     <ProjectReference Include="..\Orders.Infrastructure\Orders.Infrastructure.csproj" />
     <ProjectReference Include="..\Orders.Presentation\Orders.Presentation.csproj" />
     <ProjectReference Include="..\Presentation\Inventory.Presentation.csproj" />

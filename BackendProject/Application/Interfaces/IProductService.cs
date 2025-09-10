@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Shared.Resources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,7 @@ namespace Application.Interfaces
         Task AddProduct(Product product);
         Task UpdateProduct(Product product);
         Task DeleteProduct(long id);
-    }
+        Task<bool> IsProductExists(List<long> ids);
+        Task DeductProductQuantityAsync(List<ProductDeductDto> products);
+     }
 }

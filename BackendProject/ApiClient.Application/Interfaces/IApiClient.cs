@@ -10,5 +10,11 @@ namespace ApiClient.Application.Interfaces
     public interface IApiClient
     {
         Task<T> GetDataAsync<T>(string url);
+
+        Task<T> PostDataAsync<T>(string url, object data);
+
+        Task<T> PutDataAsync<T>(string url, object data);
+
+        Task<bool> DeleteDataAsync(string url);
     }
 }

@@ -10,6 +10,7 @@ namespace Orders.Application.Interfaces
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);
         Task DeleteAsync(long id);
+        Task<List<Order>> GetPendingOrders();
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.Models;
+using Shared.Resources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,16 @@ namespace Application.Services
         public async Task DeleteProduct(long id)
         {
             await _repository.DeleteProductAsync(id);
+        }
+
+        public async Task<bool> IsProductExists(List<long> ids)
+        {
+            return await _repository.IsProductExists(ids);
+        }
+
+        public async Task DeductProductQuantityAsync(List<ProductDeductDto> products)
+        {
+            await _repository.DeductProductQuantityAsync(products);
         }
     }
 }
