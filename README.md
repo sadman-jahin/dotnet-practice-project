@@ -1,6 +1,6 @@
 # 🧾 Inventory App
 
-An enterprise-grade inventory management application designed with scalability, maintainability, and performance in mind. This application leverages modern architectural patterns and asynchronous event-driven communication to provide a robust inventory and order management system.
+An  inventory management application (practice project) designed with Modular Monolithic Architecture. This application leverages modern architectural patterns and asynchronous event-driven communication to provide a robust inventory and order management system.
 
 ---
 
